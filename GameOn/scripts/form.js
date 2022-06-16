@@ -42,19 +42,19 @@ document.querySelector("#reserve input[type='submit']").addEventListener("click"
         let countdown = 3;
 
         // Le formulaire est caché et affichage de la pop-up de confirmation d'envoi du formulaire à sa place
-        document.getElementById('countdown').innerHTML = `Merci de votre inscription,<br> cette page se fermera dans ${countdown} secondes`;
+        document.getElementById('countdown').innerHTML = `Merci de votre inscription,<br> cette page s'actualisera dans ${countdown} secondes`;
         document.getElementById("modal-body").style.display = "none";
         document.getElementById("modal-confirm").style.display = "block";
 
         // Envoi du formulaire en décalé
         setTimeout(function () {
-            document.forms["reserve"].submit()
+            document.forms["reserve"].submit();
         }, countdown*1000);
 
         // Démarrage du compte à rebours, actualisé chaque seconde
         for (let i = 0; i < 3; i++) {
             setTimeout(function () {
-                document.getElementById('countdown').innerHTML = `Merci de votre inscription,<br> cette page se fermera dans ${countdown} secondes`;
+                document.getElementById('countdown').innerHTML = `Merci de votre inscription,<br> cette page s'actualisera dans ${countdown} secondes`;
                 countdown -- ;
             }, i*1000);
         }           

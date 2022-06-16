@@ -27,6 +27,7 @@ function launchModal() {
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  document.forms["reserve"].reset();
 }
 
 
