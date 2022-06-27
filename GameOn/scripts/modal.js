@@ -44,6 +44,7 @@ function resetForm() {
     field.style.border = "none";
   }
   spanError.forEach((span) => span.innerHTML = "");
+  spanError.forEach((span) => span.style.display = "none");
 
 }
 

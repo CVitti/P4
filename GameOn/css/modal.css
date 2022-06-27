@@ -64,10 +64,16 @@ img {
   border-radius: 15px;
 }
 
+.topnav a.active span{
+  border-bottom: solid 1px #ffffff;
+}
+
 .topnav .icon {
+  color: #ff0000;
   display: none;
 }
 
+/* Hide desktom menu and show burger menu*/
 @media screen and (max-width: 992px) {
   .topnav a {display: none;}
   .topnav a.icon {
@@ -78,17 +84,21 @@ img {
   .topnav .icon {
     position: absolute;
     right: 0;
-    top: 10px;
+    top: 4px;
   }
 }
 
+@media screen and (max-width: 1100px) and (min-width: 993px) {
+  .header-logo img{
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 15px;
+  }
+}
+
+/*  */
 @media screen and (max-width: 992px) {
   .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 10px;
-  }
   .topnav.responsive a {
     float: none;
     display: block;
@@ -97,18 +107,16 @@ img {
   .main-navbar{
     margin-right: 30px;
   }
-}
-
-
-
- @media screen and (max-width: 340px) {
   .header-logo{
-    width: 248px;
+    height: 40px;
+    max-width: 240px;
   }
   .header-logo img{
-    width: 100%;
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
   }
-} 
+}
 
 main {
   font-size: 130%;
@@ -179,7 +187,7 @@ main {
 }
 
 .content {
-  margin: 20px auto;
+  margin: 70px auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
@@ -203,7 +211,7 @@ main {
   padding: 15px 8%;
   margin: 15px auto;
   display: none;
-  height: 400px;
+  height: calc(100vh - 80px);
 }
 
 .modal-confirm div{
@@ -215,7 +223,7 @@ main {
 
 .modal-confirm button{
   position: absolute;
-  bottom: 30px;
+  bottom: 60px;
   text-align: center;
 }
 
@@ -240,7 +248,7 @@ input {
 span.error{
   color: #e54858;
   font-size: 60%;
-  display: inline-block;
+  display: none;
 }
 
 .text-control {
@@ -264,7 +272,7 @@ span.error{
   display: block;
   width: 20px;
   height: 20px;
-  border: 2px solid #279e7a;
+  border: 2px solid #ffffff;
   border-radius: 50%;
   text-indent: 29px;
   white-space: nowrap;
@@ -292,6 +300,10 @@ span.error{
 .checkbox-input {
   display: none;
 }
+.checkbox-input:checked + label.checkbox-label span.checkbox-icon{
+  border-color:#279e7a;
+}
+
 .checkbox-input:checked + .checkbox-label .checkbox-icon::after,
 .checkbox-input:checked + .checkbox2-label .checkbox-icon::after {
   opacity: 1;
@@ -429,7 +441,7 @@ span.error{
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  min-height: 75vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -502,15 +514,39 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
 @media screen and (max-width: 992px) {
+  .bground {
+    background-color: transparent;
+  }
+
+  .close {
+    width: 24px;
+    height: 24px;
+  }
+  .close:before,
+  .close:after {
+    height: 25px;
+  }
+
+  .modal-body {
+    padding-top: 5px;
+    margin-top: 5px;
+  }
+
+  main{
+    margin-bottom: 0px;
+  }
+
   .hero-section {
     display: block;
     box-shadow: unset;
+    min-height: 0;
   }
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 10px 0px;
     min-width: 0;
     width: 100%;
   }
@@ -521,16 +557,19 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 3.2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
     white-space: normal;
   }
   .hero-text {
     width: unset;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
+    margin-top: 10px;
   }
   .hero-img img {
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 10px;
+    max-height: 500px;
   }
   .hero-section > .btn-signup {
     display: block;
@@ -538,9 +577,37 @@ footer {
     padding: 12px 35px;
   }
   .copyrights {
-    margin-top: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
   }
+
+  .formData{
+    height: fit-content;
+  }
+
+  label, p.text-label{
+    font-size: 12.5px;
+  }
+  .text-control{
+    font-size: 15px;
+  }
+  p.text-label{
+    margin-top: 5px;
+  }
+  input {
+    padding: 5px;
+  }
+
+  label.checkbox-label{
+    margin-bottom: 6px;
+    margin-left: 29px;
+  }
+
+  .content{
+    border-radius: 5px;
+  }
+
 }
 
 @keyframes modalopen {

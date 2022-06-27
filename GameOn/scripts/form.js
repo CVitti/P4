@@ -29,15 +29,18 @@ document.querySelector("#reserve input[type='submit']").addEventListener("click"
     valid &= radioChecked;
 
     // Affichage de l'erreur si aucun bouton coché
+    let spanIdLocation = document.getElementById("errorLocation");
     if(!radioChecked){
-        document.getElementById("errorLocation").innerHTML = "Merci de sélectionner un tournoi dans la liste ci-dessus.";
+        spanIdLocation.style.display = "inline-block";
+        spanIdLocation.innerHTML = "Merci de sélectionner un tournoi dans la liste ci-dessus.";
     }else{
-        document.getElementById("errorLocation").innerHTML = "";
+        spanIdLocation.style.display = "none";
+        spanIdLocation.innerHTML = "";
     }
 
     // Si tout est validé, mise en place du compte à rebours + envoi du formulaire
     if(valid){
-
+        document.querySelector("#reserve input[type='submit']")?.setAttribute("data-error-visible", "false");
         // Nombre de secondes du compte à rebours
         let countdown = 3;
 
@@ -58,22 +61,26 @@ document.querySelector("#reserve input[type='submit']").addEventListener("click"
                 countdown -- ;
             }, i*1000);
         }           
+    }else{
+        document.querySelector("#reserve input[type='submit']").setAttribute("data-error-visible", "true");
     }
 
 });
 
 function errorCheck(input){
-
+    let spanId;
     // Vérification du champ Prénom
     if(input.id == "first"){
-
+        spanId = document.getElementById("errorFirst");
         // Si valeur manquante ou trop courte alors affichage d'une erreur
         if (input.validity.valueMissing || input.validity.tooShort || input.validity.patternMismatch) {
             input.style.border = "solid 2px #e54858";
-            document.getElementById("errorFirst").innerHTML = `Veuillez entrer ${input.minLength} caractères ou plus pour le champ du prénom. Caractères autorisés : Lettres avec ou sans accent, tiret et espace`;
+            spanId.innerHTML = `Veuillez entrer ${input.minLength} caractères ou plus pour le champ du prénom. Caractères autorisés : Lettres avec ou sans accent, tiret et espace`;  
+            spanId.style.display = "inline-block";
         } else {
             input.style.border = "none";
-            document.getElementById("errorFirst").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         }
 
         return input.checkValidity();
@@ -82,14 +89,16 @@ function errorCheck(input){
     
     // Vérification du champ Nom
     if(input.id == "last"){
-
+        spanId = document.getElementById("errorLast");
         // Si valeur manquante ou trop courte alors affichage d'une erreur
         if (input.validity.valueMissing || input.validity.tooShort || input.validity.patternMismatch) {
             input.style.border = "solid 2px #e54858";
-            document.getElementById("errorLast").innerHTML = `Veuillez entrer ${input.minLength} caractères ou plus pour le champ du prénom. Caractères autorisés : Lettres avec ou sans accent, tiret et espace`;
+            spanId.innerHTML = `Veuillez entrer ${input.minLength} caractères ou plus pour le champ du prénom. Caractères autorisés : Lettres avec ou sans accent, tiret et espace`;
+            spanId.style.display = "inline-block";
         } else {
             input.style.border = "none";
-            document.getElementById("errorLast").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         }
 
         return input.checkValidity();
@@ -98,28 +107,38 @@ function errorCheck(input){
 
     // Vérification du champ Email
     if(input.id == "email"){
-        
-        
+        spanId = document.getElementById("errorEmail");
+        // Si valeur manquante ou ne correspond pas à un email alors affichage d'une erreur
         if (input.validity.valueMissing || input.validity.typeMismatch) {
             input.style.border = "solid 2px #e54858";
-            document.getElementById("errorEmail").innerHTML = "L'adresse email doit être au format suivant : example@mail.com";
+            spanId.innerHTML = "L'adresse email doit être au format suivant : example@mail.com";
+            spanId.style.display = "inline-block";
         } else {
             input.style.border = "none";
-            document.getElementById("errorEmail").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         } 
         return input.checkValidity();
     }
 
     // Vérification du champ Date de naissance
     if(input.id == "birthdate"){
+        spanId = document.getElementById("errorBirthdate");
 
+        // Mise en place de date max/min pour la date de naissance
+        let today = new Date();
+        let dateMin = new Date("1900-01-01");
+        let inputDate = new Date(input.value);
+        
         // Si valeur manquante ou mal formatée alors affichage d'une erreur
-        if (input.validity.valueMissing || input.validity.typeMismatch) {
+        if (input.validity.valueMissing || input.validity.typeMismatch || (inputDate.getTime() > today.getTime()) || (inputDate.getTime() < dateMin.getTime())) {
             input.style.border = "solid 2px #e54858";
-            document.getElementById("errorBirthdate").innerHTML = "Vous devez renseigner une date de naissance valide : jj/mm/aaaa";
+            spanId.innerHTML = `Vous devez renseigner une date de naissance valide entre le ${dateMin.toLocaleDateString("fr")} et aujourd'hui`;
+            spanId.style.display = "inline-block";
         } else {
             input.style.border = "none";
-            document.getElementById("errorBirthdate").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         }
 
         return input.checkValidity();
@@ -128,18 +147,19 @@ function errorCheck(input){
 
     // Vérification du champ Quantité
     if(input.id == "quantity"){
-
+        spanId = document.getElementById("errorQuantity");
         // Si valeur manquante ou trop courte/longue ou mal formatée alors affichage d'une erreur
         if (input.validity.valueMissing || input.validity.typeMismatch || input.validity.rangeOverflow || input.validity.rangeUnderflow) {
             input.style.border = "solid 2px #e54858";
-            document.getElementById("errorQuantity").innerHTML = "Veuillez renseigner ce champ avec un nombre entre 0 et 100.";
+            spanId.innerHTML = "Veuillez renseigner ce champ avec un nombre entre 0 et 100.";
+            spanId.style.display = "inline-block";
         } else {
             if (input.value == -0){
                 input.value = 0;
             }
-
             input.style.border = "none";
-            document.getElementById("errorQuantity").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         }
 
         return input.checkValidity();
@@ -148,12 +168,14 @@ function errorCheck(input){
 
     // Vérification de la case CGU
     if(input.id == "checkbox1"){
-
+        spanId = document.getElementById("errorCGU");
         // Si la case n'est pas cochée alors affichage d'une erreur
         if (input.checked == false) {
-            document.getElementById("errorCGU").innerHTML = "Les conditions d'utilisations doivent être acceptées pour valider le formulaire.";
+            spanId.innerHTML = "Les conditions d'utilisations doivent être acceptées pour valider le formulaire.";
+            spanId.style.display = "inline-block";
         } else {
-            document.getElementById("errorCGU").innerHTML = "";
+            spanId.innerHTML = "";
+            spanId.style.display = "none";
         }
 
         return input.checkValidity();
