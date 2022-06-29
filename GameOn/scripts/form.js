@@ -135,14 +135,13 @@ function errorCheck(input){
             input.style.border = "solid 2px #e54858";
             spanId.innerHTML = `Vous devez renseigner une date de naissance valide entre le ${dateMin.toLocaleDateString("fr")} et aujourd'hui`;
             spanId.style.display = "inline-block";
+            return false;
         } else {
             input.style.border = "none";
             spanId.innerHTML = "";
             spanId.style.display = "none";
+            return true;
         }
-
-        return input.checkValidity();
-
     }
 
     // Vérification du champ Quantité
